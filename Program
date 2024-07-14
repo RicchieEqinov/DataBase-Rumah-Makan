@@ -1,0 +1,219 @@
+CREATE TABLE Data_Ibu
+  (
+    no_NIK  VARCHAR (10) NOT NULL ,
+    Nama    VARCHAR (50) NOT NULL,
+    Alamat   VARCHAR (30) NOT NULL,
+    No_Telp   VARCHAR (12) NOT NULL,
+    Nama_Bank    VARCHAR (15) NOT NULL,
+    No_Rekening VARCHAR (20) NOT NULL
+  ) ;
+ALTER TABLE Data_Ibu ADD CONSTRAINT DataIbu_PK PRIMARY KEY ( no_NIK ) ;
+
+
+CREATE TABLE Pendaftaran
+  (
+    ID_Pendaftaran   VARCHAR (10) NOT NULL ,
+    no_NIK             VARCHAR (10) NOT NULL,
+    Tanggal_pendaftaran  DATE NOT NULL,
+    Status_pendaftaran   VARCHAR (15) NOT NULL
+  ) ;
+  
+ALTER TABLE Pendaftaran ADD CONSTRAINT Pendaftaran_PK PRIMARY KEY ( ID_Pendaftaran ) ;
+
+
+CREATE TABLE Masakan
+  (
+    ID_Masakan      VARCHAR(10)  NOT NULL,
+    Jenis_Masakan   VARCHAR(20) NOT NULL,
+    Nama_Masakan    VARCHAR(20) NOT NULL,
+    Harga           INT NOT NULL
+  ) ;
+ALTER TABLE Masakan ADD CONSTRAINT Masakan_PK PRIMARY KEY ( ID_Masakan) ;
+
+
+CREATE TABLE Bahan
+  (
+    ID_Bahan       VARCHAR (10) NOT NULL ,
+    ID_Masakan     VARCHAR (10) NOT NULL ,
+    Nama_Bahan  VARCHAR (20) NOT NULL,
+    Quantity   INT NOT NULL
+  ) ;
+ALTER TABLE Bahan ADD CONSTRAINT Bahan_PK PRIMARY KEY ( ID_Bahan ) ;
+
+
+CREATE TABLE Pemasak
+  (
+    ID_Pemasak     VARCHAR(10)  NOT NULL,
+    ID_Bahan       VARCHAR(10)  NOT NULL,
+    ID_Pendaftaran  VARCHAR(10) NOT NULL,
+    Nama_Pemasak    VARCHAR(20) NOT NULL,
+    Telepon_Pemasak  VARCHAR(12) NOT NULL,
+    Alamat_Pemasak   VARCHAR(20) NOT NULL
+  ) ;
+ALTER TABLE Pemasak ADD CONSTRAINT Pemasak_PK  PRIMARY KEY ( ID_Pemasak) ;
+ 
+
+CREATE TABLE Pembeli
+  (
+    ID_Pembeli       VARCHAR (10) NOT NULL ,
+    ID_Pendaftaran   VARCHAR (10) NOT NULL,
+	Tanggal_Membeli  DATE NOT NULL,
+    Nama_Pembeli  VARCHAR (20) NOT NULL,
+    Telepon_Pembeli  VARCHAR (12) NOT NULL,
+    Alamat_Pembeli  VARCHAR (20) NOT NULL
+  ) ;
+ALTER TABLE Pembeli ADD CONSTRAINT Pembeli_PK PRIMARY KEY ( id_pembeli ) ;
+
+
+CREATE TABLE Jadwal
+  (
+    ID_jadwal  VARCHAR (10) NOT NULL ,
+    ID_Masakan VARCHAR (10) NOT NULL ,
+    ID_Pemasak VARCHAR (10) NOT NULL,
+    Tanggal_Pelaksanaan  DATE NOT NULL,
+    Tempat_Pelaksanaan       VARCHAR (15) NOT NULL,
+    Waktu_Pelaksanaan       VARCHAR (10) NOT NULL,
+    Rencana_Masakan   VARCHAR(20) NOT NULL
+  ) ;
+ALTER TABLE Jadwal ADD CONSTRAINT Jadwal_PK PRIMARY KEY ( ID_jadwal ) ;
+
+
+CREATE TABLE Pembayaran
+  (
+    ID_Pembayaran  VARCHAR (10) NOT NULL ,
+    ID_Masakan       VARCHAR (10) NOT NULL ,
+    ID_Pembeli       VARCHAR (10) NOT NULL ,
+    Jumlah_Pembayaran INT NOT NULL,
+    Status_Pembayaran VARCHAR(10) NOT NULL,
+    Tanggal_Pembayaran  DATE NOT NULL,
+    Nama_Pengirim  VARCHAR(10) NOT NULL
+  ) ;
+ALTER TABLE Pembayaran ADD CONSTRAINT Pembayaran_PK PRIMARY KEY ( ID_Pembayaran ) ;
+
+
+
+ALTER TABLE Pendaftaran ADD CONSTRAINT Pendaftaran_FK FOREIGN KEY ( no_no_NIK ) REFERENCES Data_Ibu ( no_no_NIK ) ;
+ALTER TABLE Bahan ADD CONSTRAINT Bahan_FK FOREIGN KEY ( ID_Masakan ) REFERENCES Masakan ( ID_Masakan ) ;
+ALTER TABLE Pemasak ADD CONSTRAINT Pemasak_FK FOREIGN KEY ( ID_Bahan ) REFERENCES Bahan ( ID_Bahan ) ;
+ALTER TABLE Pemasak ADD CONSTRAINT Pemasak_FK2 FOREIGN KEY ( ID_Pendaftaran ) REFERENCES Pendaftaran ( ID_Pendaftaran ) ;
+ALTER TABLE Pembeli ADD CONSTRAINT Pembeli_FK FOREIGN KEY ( ID_Pendaftaran ) REFERENCES Pendaftaran ( ID_Pendaftaran ) ;
+ALTER TABLE Jadwal ADD CONSTRAINT Jadwal_FK FOREIGN KEY ( ID_Masakan ) REFERENCES Masakan ( ID_Masakan ) ;
+ALTER TABLE Jadwal ADD CONSTRAINT Jadwal_FK2 FOREIGN KEY ( ID_Pemasak ) REFERENCES Pemasak ( ID_Pemasak ) ;
+ALTER TABLE Pembayaran ADD CONSTRAINT Pembayaran_FK FOREIGN KEY ( ID_Masakan ) REFERENCES Masakan ( ID_Masakan ) ;
+ALTER TABLE Pembayaran ADD CONSTRAINT Pembayaran_FK2 FOREIGN KEY ( ID_Pembeli ) REFERENCES Pembeli ( ID_Pembeli ) ;
+
+
+
+
+
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('9534821943','Nurul','Jakarta','087503946810','BNI','9841567023491');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('2406859175','Anti','Bandung','089605137492','Mandiri','5127094632859');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('8139560248','Yuni','Surakarta','081874926385','BCA','2593684105738');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('7251408392','Lala','Surabaya','088163057204','BCA','7039182456702');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('6489175302','Eka','Semarang','085097483620','Mandiri','4362978510398');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('9378498237','Farah','Semarang','085097483620','Mandiri','4362978510398');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('1298398717','Sarah','Serang','081283761287','Mandiri','1982369832872');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('2983471287','Hana','Surabaya','081278359123','BCA','9827398172390');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('2983719237','Rose','Jakarta','087365872372','BNI','9288923698273');
+INSERT INTO Data_Ibu (no_NIK,Nama,Alamat,No_Telp,Nama_Bank,No_Rekening) VALUES('0980947570','Talita','Jakarta','086513184654','BNI','6165498465198');
+
+
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('A5C3D9E4F2','9534821943','05-May-2023','Lunas');  
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('B1G8H2J7K9','2406859175','10-Jan-2023','Lunas'); 
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('X4Y7Z1P3Q2','8139560248','21-Jul-2022','Lunas');  
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('M9N6P5R2S1','7251408392','30-Mar-2022','Lunas');  
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('H3K9L1M4N7','6489175302','10-Jan-2023','Belum Lunas');  
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('UVWXYZ4567','9378498237','06-Feb-2023','Belum Lunas');  
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('NOPQRST123','1298398717','06-Mar-2023','Lunas');     
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('HIJKLM7890','2983471287','12-Aug-2022','Lunas');   
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('XYZJKLM567','2983719237','27-Sep-2022','Belum Lunas');   
+INSERT INTO Pendaftaran (ID_Pendaftaran,no_NIK,Tanggal_Pendaftaran,Status_Pendaftaran) VALUES('ABCDEF1234','0980947570','20-Mar-2022','Belum Lunas');
+
+
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (1, 'Makanan Ringan', 'Kripik Singkong', 5000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (2, 'Makanan Berat', 'Nasi Goreng', 15000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (3, 'Makanan Penutup', 'Es Krim', 10000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_masakan, Harga)
+VALUES (4, 'Makanan Ringan', 'Keripik Pisang', 6000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_masakan, Harga)
+VALUES (5, 'Makanan Berat', 'Sate Ayam', 20000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (6, 'Makanan Penutup', 'Puding Coklat', 8000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (7, 'Makanan Ringan', 'Kacang Telur', 4000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (8, 'Makanan Berat', 'Ayam Goreng', 18000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (9, 'Makanan Penutup', 'Cheesecake', 12000);
+
+INSERT INTO Masakan (ID_Masakan, Jenis_Masakan, Nama_Masakan, Harga)
+VALUES (10, 'Makanan Berat', 'Nasi Padang', 25000);
+
+
+
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('ABC12','1','Bayam',100);
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('XYZ45','2','Tempe',100);
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('HIJ67','3','Tahu',100);
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('NOP89','4','kangkung',100);          
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('UVW23','5','lengkuas',100);
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('MNO56','6','jahe',100);
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('QRS78','7','Jagung',100);           
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('DEF90','8','Wortel',100);           
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('GHI34','9','Kubis',100);
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('JKL56','10','Brokoli',100);
+
+
+INSERT INTO Pemasak (ID_Pemasak,ID_Bahan,ID_Pendaftaran,Nama_Pemasak,Telepon_Pemasak,Alamat_Pemasak) VALUES('P2R21','ABC12','B1G8H2J7K9','Anti','089605137492','Bandung');
+INSERT INTO Pemasak (ID_Pemasak,ID_Bahan,ID_Pendaftaran,Nama_Pemasak,Telepon_Pemasak,Alamat_Pemasak) VALUES('P9Y65','DEF90','H3K9L1M4N7','Eka','085097483620','Semarang');
+INSERT INTO Pemasak (ID_Pemasak,ID_Bahan,ID_Pendaftaran,Nama_Pemasak,Telepon_Pemasak,Alamat_Pemasak) VALUES('P1N40','QRS78','HIJKLM7890','Hana','081278359123','Surabaya');
+INSERT INTO Pemasak (ID_Pemasak,ID_Bahan,ID_Pendaftaran,Nama_Pemasak,Telepon_Pemasak,Alamat_Pemasak) VALUES('P7O11','NOP89','XYZJKLM567','Rose','087365872372','Jakarta');
+
+ALTER TABLE Pembeli DROP COLUMN Tanggal_Membeli;
+
+INSERT INTO Pembeli (ID_Pembeli,ID_Pendaftaran,Nama_Pembeli,Telepon_Pembeli,Alamat_Pembeli) VALUES('B001','A5C3D9E4F2','Nurul','087503946810','Jakarta');
+INSERT INTO Pembeli (ID_Pembeli,ID_Pendaftaran,Nama_Pembeli,Telepon_Pembeli,Alamat_Pembeli) VALUES('B002','X4Y7Z1P3Q2','Yuni','081874926385','Surakarta');
+INSERT INTO Pembeli (ID_Pembeli,ID_Pendaftaran,Nama_Pembeli,Telepon_Pembeli,Alamat_Pembeli) VALUES('B003','M9N6P5R2S1','Lala','088163057204','Surabaya');
+INSERT INTO Pembeli (ID_Pembeli,ID_Pendaftaran,Nama_Pembeli,Telepon_Pembeli,Alamat_Pembeli) VALUES('B004','UVWXYZ4567','Farah','085097483620','Semarang');
+INSERT INTO Pembeli (ID_Pembeli,ID_Pendaftaran,Nama_Pembeli,Telepon_Pembeli,Alamat_Pembeli) VALUES('B005','NOPQRST123','Sarah','081283761287','Serang');
+INSERT INTO Pembeli (ID_Pembeli,ID_Pendaftaran,Nama_Pembeli,Telepon_Pembeli,Alamat_Pembeli) VALUES('B006','ABCDEF1234','Talita','086513184654','Jakarta');
+
+ALTER TABLE Jadwal DROP COLUMN Waktu_Pelaksanaan;
+ALTER TABLE Jadwal DROP COLUMN Rencana_Masakan;
+
+INSERT INTO Jadwal (ID_Jadwal,ID_Masakan,ID_Pemasak,Tanggal_Pelaksanaan,Tempat_Pelaksanaan) VALUES('JAD01','1','P2R21','05-Jun-2023','Bojongsoang');
+INSERT INTO Jadwal (ID_Jadwal,ID_Masakan,ID_Pemasak,Tanggal_Pelaksanaan,Tempat_Pelaksanaan) VALUES('JAD02','2','P9Y65','12-Jun-2023','Sukabirus');
+INSERT INTO Jadwal (ID_Jadwal,ID_Masakan,ID_Pemasak,Tanggal_Pelaksanaan,Tempat_Pelaksanaan) VALUES('JAD03','3','P1N40','19-Jun-2023','Sukabirus');
+INSERT INTO Jadwal (ID_Jadwal,ID_Masakan,ID_Pemasak,Tanggal_Pelaksanaan,Tempat_Pelaksanaan) VALUES('JAD04','4','P7O11','26-Jun-2023','Bojongsoang');
+
+ALTER TABLE Pembayaran DROP COLUMN Nama_Pengirim;
+
+INSERT INTO Pembayaran (ID_Pembayaran,ID_Masakan,ID_Pembeli,Jumlah_Pembayaran,Status_Pembayaran,Tanggal_Pembayaran)  VALUES('EFO783','1','B002',5000,'LUNAS','01-Jul-2023');
+INSERT INTO Pembayaran (ID_Pembayaran,ID_Masakan,ID_Pembeli,Jumlah_Pembayaran,Status_Pembayaran,Tanggal_Pembayaran)  VALUES('YUA075','4','B001',6000,'HUTANG','03-Jul-2023');
+INSERT INTO Pembayaran (ID_Pembayaran,ID_Masakan,ID_Pembeli,Jumlah_Pembayaran,Status_Pembayaran,Tanggal_Pembayaran)  VALUES('IKJ803','5','B004',20000,'LUNAS','03-Jul-2023');
+INSERT INTO Pembayaran (ID_Pembayaran,ID_Masakan,ID_Pembeli,Jumlah_Pembayaran,Status_Pembayaran,Tanggal_Pembayaran)  VALUES('LKM879','1','B004',5000,'LUNAS','03-Jul-2023');
+INSERT INTO Pembayaran (ID_Pembayaran,ID_Masakan,ID_Pembeli,Jumlah_Pembayaran,Status_Pembayaran,Tanggal_Pembayaran)  VALUES('UKT500','1','B003',5000,'HUTANG','04-Jul-2023');
+INSERT INTO Pembayaran (ID_Pembayaran,ID_Masakan,ID_Pembeli,Jumlah_Pembayaran,Status_Pembayaran,Tanggal_Pembayaran)  VALUES('JJU627','2','B003',15000,'HUTANG','04-Jul-2023');
+INSERT INTO Pembayaran (ID_Pembayaran,ID_Masakan,ID_Pembeli,Jumlah_Pembayaran,Status_Pembayaran,Tanggal_Pembayaran)  VALUES('AAD931','3','B005',10000,'LUNAS','05-Jul-2023');
+
+SELECT NAMA_PEMBELI, TELEPON_PEMBELI
+FROM PEMBELI
+WHERE ALAMAT_PEMBELI LIKE '%ta';
+
+SELECT * FROM PEMBELI;
+
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('PLM87','1','KENCUR','350');
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('UNH50','1','Singkong','800');
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('GTR61','1','Cabai','350');
+INSERT INTO Bahan (ID_Bahan,ID_Masakan,Nama_Bahan,Quantity) VALUES('IDK23','2','Garam','150');
